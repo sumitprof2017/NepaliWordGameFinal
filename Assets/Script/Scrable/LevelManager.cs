@@ -178,7 +178,7 @@ public class LevelManager : MonoBehaviour
     public IEnumerator DelayTimeBeforeLevelComplete()
     {
         
-        if (totalConnectedWordList.Count == listOfSubstring.Count)
+        if (totalConnectedWordList.Count == listOfSubstring.Count || AreAllImageLetterTextsFilled())
         {
             showConnectedWord.text = "";
             string[] arrayForAnimationText = { "Amazing!", "Great job!", "Superb!", "Well done!", "Perfect!", "Marvelous!" };
@@ -201,6 +201,81 @@ public class LevelManager : MonoBehaviour
             GameManagerObj.GameOver();
         }
         showConnectedWord.text = "";
+        List_for_letter.Clear();
+    }
+
+    public bool AreAllImageLetterTextsFilled()
+    {
+        GameObject ParentHolder = this.ParentHolder;
+        if (ParentHolder == null)
+        {
+            Debug.LogError(" ParentHolder is not assigned!");
+            return false;
+        }
+
+        // Get all nested children under ParentHolder
+        Transform[] allChildren = ParentHolder.GetComponentsInChildren<Transform>(true);
+
+        bool foundAny = false;
+
+        foreach (Transform child in allChildren)
+        {
+            // Look specifically for "ImageLetter"
+            if (child.name == "Image_Letter")
+            {
+                foundAny = true;
+
+                // Try getting any TMP text component
+                TMP_Text tmp = child.GetComponent<TMP_Text>();
+
+                if (tmp == null)
+                {
+
+                    return false;
+                }
+
+                // Check if text is empty or whitespace
+                if (string.IsNullOrWhiteSpace(tmp.text))
+                {
+
+                    return false;
+                }
+            }
+        }
+
+        if (!foundAny)
+        {
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public IEnumerator EndGameFromHint()
+    {
+       
+          
+            string[] arrayForAnimationText = { "Amazing!", "Great job!", "Superb!", "Well done!", "Perfect!", "Marvelous!" };
+            int value = Random.Range(0, 6);
+            TMP_Text textanim = animationText.GetComponent<TMP_Text>();
+            textanim.text = arrayForAnimationText[value];
+
+            LeanTween.scale(animationText, new Vector3(1.5f, 1.5f, 1.5f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutElastic);
+
+            yield return new WaitForSeconds(2f);
+            LeanTween.scale(animationText, new Vector3(0f, 0f, 0f), 0f);
+            List_for_letter.Clear();
+            ChildPointsList.Clear();
+            lineManagerObj.lineCreator.positionCount = 0;
+            lineManagerObj.lineCreator.enabled = false;
+            lineManagerObj.linesList.Clear();
+            print("line list is cleared");
+            ItemScriptObj.lineManagerGameObject.SetActive(false);
+            UndoInstantiatedObjects();
+            GameManagerObj.GameOver();
+        
         List_for_letter.Clear();
     }
 

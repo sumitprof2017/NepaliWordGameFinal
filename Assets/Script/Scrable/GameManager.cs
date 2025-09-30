@@ -67,13 +67,23 @@ public class GameManager : MonoBehaviour
         levelManagerStore.SetActive(false);
 
         string levelCounter = PlayerPrefs.GetString("levelCount");
+        print("levle counter" + levelCounter);
         string CoinVal = PlayerPrefs.GetString("coinValue");
+        print("coin value pref counter" + CoinVal);
         if (!levelCounter.Equals(""))
         {
             levelCount = int.Parse(levelCounter);
-            coinValue=int.Parse(CoinVal);
         }
-        
+        if (!CoinVal.Equals(""))
+        {
+            coinValue = int.Parse(CoinVal);
+            CoinText.text = coinValue.ToString();
+
+        }
+        print("current coin value" + coinValue);
+        /*        coinValue = 100;
+        */
+       // coinValue = 50;
         StartNewLevel();
     }
     public void StartNewLevel()
@@ -87,6 +97,8 @@ public class GameManager : MonoBehaviour
         levelCount++;
         levelName.text = "Level " +levelCount;
         levelCount--;
+        PlayerPrefs.SetString("levelCount", levelCount.ToString());
+
         print(WordToSplit);
         int number_to_split = listOfWordFeature[levelCount].noToSplitMainWord;
         array_Of_split_character=levelManagerObj.SplitDevanagariString(WordToSplit);
@@ -150,7 +162,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   
+    private int gameOverCounter = 0;
     public void GameOver()
     {
         print("word before change" + WordToSplit);
@@ -159,6 +171,8 @@ public class GameManager : MonoBehaviour
         print("word after change" + WordToSplit);
         coinValue = coinValue + 25;
         CoinText.text = coinValue.ToString();
+     //   PlayerPrefs.SetString("coinValue", coinValue.ToString());
+
         RollStorer.SetActive(false);
         PointStorer.SetActive(false);
         LevelNameStore.SetActive(false);
@@ -168,9 +182,15 @@ public class GameManager : MonoBehaviour
         audioPlayer.PlayOneShot(levComplete_AudioClip);
         /*adManagerObj.LoadInterstitialAd();
         adManagerObj.LoadBannerAd();*/
-        StartCoroutine(AdOnLevelComplete());
+        gameOverCounter++;
+        if (gameOverCounter >= 3)
+        {
+            StartCoroutine(AdOnLevelComplete());
+            gameOverCounter = 0; // reset after showing ad
+        }
     }
-    
+
+
     public IEnumerator AdOnLevelComplete()
     {
         yield return new WaitForSeconds(0.5f);
@@ -195,8 +215,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        PlayerPrefs.SetString("levelCount", levelCount.ToString());
-        PlayerPrefs.SetString("coinValue", coinValue.ToString());
+       /* PlayerPrefs.SetString("levelCount", levelCount.ToString());
+        PlayerPrefs.SetString("coinValue", coinValue.ToString());*/
     }
 }
 

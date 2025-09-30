@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -113,8 +113,16 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler
                         nullText.text = arrayOfSubWord[k].ToUpper();
                         k = num_To_Split;
                         j = levelManagerObj.listOfSubstring.Count;
+                        
                         gameManagerObj.coinValue = gameManagerObj.coinValue - 10;
                         gameManagerObj.CoinText.text = gameManagerObj.coinValue.ToString();
+                        PlayerPrefs.SetString("coinValue", gameManagerObj.coinValue.ToString());
+
+                        if (AreAllImageLetterTextsFilled())
+                        {
+                            StartCoroutine(levelManagerObj.EndGameFromHint());
+                           
+                        }
                     }
                     else
                     {
@@ -134,6 +142,55 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler
 
     }
 
+
+    public bool AreAllImageLetterTextsFilled()
+    {
+        GameObject ParentHolder = levelManagerObj.ParentHolder;
+        if (ParentHolder == null)
+        {
+            Debug.LogError(" ParentHolder is not assigned!");
+            return false;
+        }
+
+        // Get all nested children under ParentHolder
+        Transform[] allChildren = ParentHolder.GetComponentsInChildren<Transform>(true);
+
+        bool foundAny = false;
+
+        foreach (Transform child in allChildren)
+        {
+            // Look specifically for "ImageLetter"
+            if (child.name == "Image_Letter")
+            {
+                foundAny = true;
+
+                // Try getting any TMP text component
+                TMP_Text tmp = child.GetComponent<TMP_Text>();
+
+                if (tmp == null)
+                {
+                  
+                    return false;
+                }
+
+                // Check if text is empty or whitespace
+                if (string.IsNullOrWhiteSpace(tmp.text))
+                {
+                   
+                    return false;
+                }
+            }
+        }
+
+        if (!foundAny)
+        {
+         
+            return false;
+        }
+
+        // ✅ All ImageLetter objects have non-empty text
+        return true;
+    }
 
     public IEnumerator CoinMsgNotify()
     {
