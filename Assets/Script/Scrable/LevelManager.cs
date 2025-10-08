@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
             audioPlayer_LEC.PlayOneShot(play_Clip_On_CorrectWord);
             totalConnectedWordList.Add(connectedWords);
             print("total connectedWords count is " + totalConnectedWordList.Count);
+            AndroidVibration.Instance.VibrateNow();
         }
         
     }
@@ -49,6 +50,7 @@ public class LevelManager : MonoBehaviour
     {
         StopCoroutine(StartSequence());
     }
+    public HandAnimation handAnimationObj;
     IEnumerator StartSequence()
     {
         yield return null;
@@ -80,6 +82,15 @@ public class LevelManager : MonoBehaviour
                 print("gameobj name" + ParentHolder.transform.GetChild(j).transform.GetChild(newChildIndex).transform.GetChild(k).gameObject.name);
                 GameObject instantiatedItemOnLevel = Instantiate(ImageObject1, ParentHolder.transform.GetChild(j).transform.GetChild(numberToSplit - 2).transform.GetChild(k).transform.position,Quaternion.identity, ParentHolder.transform.GetChild(j).transform.GetChild(numberToSplit - 2).transform.GetChild(k));
                 instantiatedItemOnLevelList.Add(instantiatedItemOnLevel);
+/*
+                if (j < 3 && k == 0) // pick first child of each substring as A, B, C
+                {
+                    if (j == 0) handAnimationObj.pointA = instantiatedItemOnLevel.transform;
+                    else if (j == 1) handAnimationObj.pointB = instantiatedItemOnLevel.transform;
+                    else if (j == 2) handAnimationObj.pointC = instantiatedItemOnLevel.transform;
+                    
+                    if(GameManagerObj.levelCount == 0)handAnimationObj.gameObject.SetActive(true);
+                }*/
             }
         }
         

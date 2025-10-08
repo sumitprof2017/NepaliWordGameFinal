@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         {
             levelCount = int.Parse(levelCounter);
         }
+        levelCount = 0;
         /*  coinValue = 50;
           CoinText.text = coinValue.ToString();*/
 
