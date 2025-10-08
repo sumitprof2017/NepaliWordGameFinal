@@ -74,6 +74,9 @@ public class GameManager : MonoBehaviour
         {
             levelCount = int.Parse(levelCounter);
         }
+        /*  coinValue = 50;
+          CoinText.text = coinValue.ToString();*/
+
         if (!CoinVal.Equals(""))
         {
             coinValue = int.Parse(CoinVal);
@@ -83,7 +86,6 @@ public class GameManager : MonoBehaviour
         print("current coin value" + coinValue);
         /*        coinValue = 100;
         */
-       // coinValue = 50;
         StartNewLevel();
     }
     public void StartNewLevel()
@@ -171,7 +173,7 @@ public class GameManager : MonoBehaviour
         print("word after change" + WordToSplit);
         coinValue = coinValue + 25;
         CoinText.text = coinValue.ToString();
-     //   PlayerPrefs.SetString("coinValue", coinValue.ToString());
+        PlayerPrefs.SetString("coinValue", coinValue.ToString());
 
         RollStorer.SetActive(false);
         PointStorer.SetActive(false);
