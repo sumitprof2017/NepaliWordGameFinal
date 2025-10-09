@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
         TenPointParentStore.SetActive(false);
         LevelNameStore.SetActive(false);
         levelManagerStore.SetActive(false);
+        levelCount = 0;
 
         string levelCounter = PlayerPrefs.GetString("levelCount");
         print("levle counter" + levelCounter);
@@ -74,7 +75,6 @@ public class GameManager : MonoBehaviour
         {
             levelCount = int.Parse(levelCounter);
         }
-        levelCount = 0;
         /*  coinValue = 50;
           CoinText.text = coinValue.ToString();*/
 
@@ -89,6 +89,9 @@ public class GameManager : MonoBehaviour
         */
         StartNewLevel();
     }
+
+    [SerializeField]
+    public HandAnimation handanimation;
     public void StartNewLevel()
     {
         adManagerObj.LoadInterstitialAd();
@@ -100,6 +103,7 @@ public class GameManager : MonoBehaviour
         levelCount++;
         levelName.text = "Level " +levelCount;
         levelCount--;
+        
         PlayerPrefs.SetString("levelCount", levelCount.ToString());
 
         print(WordToSplit);
@@ -162,6 +166,17 @@ public class GameManager : MonoBehaviour
             PointStorer.SetActive(true);
             levelManagerStore.SetActive(true);
             
+        }
+     
+        StartCoroutine(EnableHand());
+    }
+
+    IEnumerator EnableHand()
+    {
+        yield return new WaitForSeconds(1.2f);
+        if (levelCount == 0)
+        {
+            handanimation.gameObject.SetActive(true);
         }
     }
 

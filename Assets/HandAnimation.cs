@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class HandAnimation : MonoBehaviour
 {
@@ -16,66 +17,114 @@ public class HandAnimation : MonoBehaviour
     [HideInInspector] public Transform pointB;  // Assigned from LevelManager
     [HideInInspector] public Transform pointC;  // Assigned from LevelManager
 
+    [Header("References")]
+    public GameObject threePointer;      // Assign your "ThreePointer" parent
+    public string devanagariWord = "कमल"; // Word to match (क, म, ल)
+
+
+    private void Awake()
+    {
+        SetPoints();
+    }
+
     void Start()
     {
-        // Make sure all points are assigned
+        
+
         if (pointA == null || pointB == null || pointC == null)
         {
-            Debug.LogError("HandAnimation: Points A, B, or C are not assigned!");
+            Debug.LogError("HandAnimation: Points A, B, or C were not found!");
             return;
         }
 
-        // Set initial position to pointA
+        // Initial setup
         handObject.transform.position = pointA.position;
-
-        // Setup LineRenderer
         lineRenderer.positionCount = 3;
         lineRenderer.enabled = true;
 
-        // Initially hide all line segments
+        // Reset line
         lineRenderer.SetPosition(0, pointA.position);
         lineRenderer.SetPosition(1, pointA.position);
         lineRenderer.SetPosition(2, pointA.position);
 
-        // Start the looping movement
+        // Start animation
         MoveSequence();
     }
 
+    private void OnDisable()
+    {
+        LeanTween.cancel(handObject);
+    }
+
     /// <summary>
-    /// Loops the hand movement A → B → C → reset → repeat
+    /// Automatically finds and assigns the correct points based on letters
     /// </summary>
+    public void SetPoints()
+    {
+        if (threePointer == null)
+        {
+            Debug.LogError("ThreePointer reference not set!");
+            return;
+        }
+
+        // Split the Devanagari word into individual letters
+        char[] letters = devanagariWord.ToCharArray();
+
+        // Get all letter components under ThreePointer
+        TextMeshProUGUI[] allLetters = threePointer.GetComponentsInChildren<TextMeshProUGUI>(true);
+
+        Transform[] foundPoints = new Transform[letters.Length];
+
+        // Loop through each target letter
+        for (int i = 0; i < letters.Length; i++)
+        {
+            string letterToFind = letters[i].ToString();
+
+            foreach (var letterObj in allLetters)
+            {
+                if (letterObj.text == letterToFind)
+                {
+                    foundPoints[i] = letterObj.transform;
+                    break;
+                }
+            }
+        }
+
+        // Assign to your points
+        if (foundPoints.Length >= 3)
+        {
+            pointA = foundPoints[0];
+            pointB = foundPoints[1];
+            pointC = foundPoints[2];
+        }
+
+        Debug.Log($"Points set for word {devanagariWord}: " +
+                  $"{pointA?.name}, {pointB?.name}, {pointC?.name}");
+    }
+
     void MoveSequence()
     {
-        // Move from pointA → pointB
         LeanTween.move(handObject, pointB.position, moveTime).setOnStart(() =>
         {
-            // Enable first segment (A → B)
             lineRenderer.SetPosition(1, pointB.position);
         }).setOnComplete(() =>
         {
-            // Move from pointB → pointC
             LeanTween.move(handObject, pointC.position, moveTime).setOnStart(() =>
             {
-                // Enable second segment (B → C)
                 lineRenderer.SetPosition(2, pointC.position);
             }).setOnComplete(() =>
             {
-                // Reset to pointA
                 LeanTween.delayedCall(0.3f, () =>
                 {
                     lineRenderer.enabled = false;
 
                     LeanTween.delayedCall(0.2f, () =>
                     {
-                        // Reset position and line
                         handObject.transform.position = pointA.position;
                         lineRenderer.enabled = true;
-
                         lineRenderer.SetPosition(0, pointA.position);
                         lineRenderer.SetPosition(1, pointA.position);
                         lineRenderer.SetPosition(2, pointA.position);
-
-                        // Loop again
                         MoveSequence();
                     });
                 });
@@ -83,9 +132,6 @@ public class HandAnimation : MonoBehaviour
         });
     }
 
-    /// <summary>
-    /// Call this to stop the hand animation and all LeanTweens on it
-    /// </summary>
     public void StopHandAnimation()
     {
         LeanTween.cancel(handObject);

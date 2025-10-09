@@ -3053,6 +3053,7 @@ MonoBehaviour:
       noToSplit: 6
   array_Of_split_character: []
   originalArrayOfSplitCharacter: []
+  handanimation: {fileID: 514794419}
 --- !u!82 &168599730
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6313,7 +6314,7 @@ MonoBehaviour:
   totalConnectedWordList: []
   play_Clip_On_CorrectWord: {fileID: 8300000, guid: a9214d57f349c7f48974c6828e259de9, type: 3}
   audioPlayer_LEC: {fileID: 392110026}
-  handAnimationObj: {fileID: 514794419}
+  handAnimationObj: {fileID: 0}
 --- !u!4 &392110025
 Transform:
   m_ObjectHideFlags: 0
@@ -8405,16 +8406,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 514794415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb641365a9252b4ba7ddf9205d581db, type: 3}
+  m_Script: {fileID: 11500000, guid: b7f34bf64aa17304eacf20b980eec6fa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandAnimation
   moveTime: 1
   handObject: {fileID: 514794415}
   lineRenderer: {fileID: 2083829206}
-  levelManagerObj: {fileID: 392110024}
+  levelManagerObj: {fileID: 0}
   pointA: {fileID: 0}
   pointB: {fileID: 0}
   pointC: {fileID: 0}
+  threePointer: {fileID: 1613501202}
+  devanagariWord: "\u0915\u092E\u0932"
 --- !u!1 &517933260
 GameObject:
   m_ObjectHideFlags: 0
@@ -13891,6 +13894,8 @@ ParticleSystemRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -13912,6 +13917,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -21714,6 +21720,8 @@ LineRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -21735,6 +21743,7 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1392327719
   m_SortingLayer: 2
   m_SortingOrder: 0
@@ -26891,6 +26900,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -26912,6 +26923,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1482058195
   m_SortingLayer: 1
   m_SortingOrder: 0
@@ -31167,6 +31179,8 @@ LineRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -31188,6 +31202,7 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -31596,6 +31611,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -31617,6 +31634,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1482058195
   m_SortingLayer: 1
   m_SortingOrder: 0
