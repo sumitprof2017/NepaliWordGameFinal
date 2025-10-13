@@ -65,25 +65,28 @@ public class GameManager : MonoBehaviour
         TenPointParentStore.SetActive(false);
         LevelNameStore.SetActive(false);
         levelManagerStore.SetActive(false);
-        levelCount = 0;
+        //levelCount = 34;
 
         string levelCounter = PlayerPrefs.GetString("levelCount");
         print("levle counter" + levelCounter);
         string CoinVal = PlayerPrefs.GetString("coinValue");
         print("coin value pref counter" + CoinVal);
+        levelCount = 35;
         if (!levelCounter.Equals(""))
         {
             levelCount = int.Parse(levelCounter);
         }
-        /*  coinValue = 50;
-          CoinText.text = coinValue.ToString();*/
 
-        if (!CoinVal.Equals(""))
+
+        coinValue = 1500000;
+        CoinText.text = coinValue.ToString();
+
+        /*if (!CoinVal.Equals(""))
         {
             coinValue = int.Parse(CoinVal);
             CoinText.text = coinValue.ToString();
 
-        }
+        }*/
         print("current coin value" + coinValue);
         /*        coinValue = 100;
         */
