@@ -34,7 +34,7 @@ public class NotificationController : MonoBehaviour
 
 #if UNITY_ANDROID
             AndroidNotificationCenter.CancelAllNotifications();
-            androidNotifications.SendNotification("Lets learn", "Lets learn some new words today", 12);
+            androidNotifications.SendNotification("Lets learn", "Lets learn some new words today", 1);
 #endif
 
 #if Unity_IOS

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -238,6 +239,46 @@ public class GameManager : MonoBehaviour
     {
        /* PlayerPrefs.SetString("levelCount", levelCount.ToString());
         PlayerPrefs.SetString("coinValue", coinValue.ToString());*/
+    }
+
+    [ContextMenu("Shuffle WordFeature List By SubWords Count")]
+    private void ShuffleBySubWordsCount()
+    {
+        if (listOfWordFeature == null || listOfWordFeature.Count == 0) return;
+
+        // Step 1: Group by number of subwords
+        var grouped = listOfWordFeature.GroupBy(wf => wf.subWords.Count)
+                                       .OrderBy(g => g.Key) // optional: sort by subWords count
+                                       .ToList();
+
+        // Step 2: Shuffle each group individually
+        List<WordFeature> shuffledList = new List<WordFeature>();
+        foreach (var group in grouped)
+        {
+            List<WordFeature> groupList = group.ToList();
+            ShuffleList(groupList);   // shuffle inside group
+            shuffledList.AddRange(groupList);
+        }
+
+        // Step 3: Replace original list
+        listOfWordFeature = shuffledList;
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this); // save in inspector
+#endif
+        Debug.Log("WordFeature list shuffled by subWords count!");
+    }
+
+    // Generic shuffle helper
+    private void ShuffleList<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            T temp = list[i];
+            int randomIndex = UnityEngine.Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
     }
 }
 
