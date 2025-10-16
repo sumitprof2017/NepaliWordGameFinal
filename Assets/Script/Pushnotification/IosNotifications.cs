@@ -1,9 +1,12 @@
 using System.Collections;
+#if Unity_IOS
 using Unity.Notifications.iOS;
+#endif
 using UnityEngine;
-
+#if Unity_IOS
 public class IosNotifications : MonoBehaviour
 {
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public IEnumerator RequestAuthorization()
     {
@@ -44,3 +47,4 @@ public class IosNotifications : MonoBehaviour
         
     }
 }
+#endif

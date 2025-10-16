@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         print("levle counter" + levelCounter);
         string CoinVal = PlayerPrefs.GetString("coinValue");
         print("coin value pref counter" + CoinVal);
-        levelCount = 35;
+        levelCount = 0;
         if (!levelCounter.Equals(""))
         {
             levelCount = int.Parse(levelCounter);
@@ -241,44 +241,24 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("coinValue", coinValue.ToString());*/
     }
 
-    [ContextMenu("Shuffle WordFeature List By SubWords Count")]
-    private void ShuffleBySubWordsCount()
+    [ContextMenu("Shuffle After 20 Words")]
+    public void ShuffleAfter20()
     {
-        if (listOfWordFeature == null || listOfWordFeature.Count == 0) return;
-
-        // Step 1: Group by number of subwords
-        var grouped = listOfWordFeature.GroupBy(wf => wf.subWords.Count)
-                                       .OrderBy(g => g.Key) // optional: sort by subWords count
-                                       .ToList();
-
-        // Step 2: Shuffle each group individually
-        List<WordFeature> shuffledList = new List<WordFeature>();
-        foreach (var group in grouped)
+        if (listOfWordFeature.Count <= 20)
         {
-            List<WordFeature> groupList = group.ToList();
-            ShuffleList(groupList);   // shuffle inside group
-            shuffledList.AddRange(groupList);
+            Debug.Log("List has 20 or fewer items, skipping shuffle.");
+            return;
         }
 
-        // Step 3: Replace original list
-        listOfWordFeature = shuffledList;
-
-#if UNITY_EDITOR
-        UnityEditor.EditorUtility.SetDirty(this); // save in inspector
-#endif
-        Debug.Log("WordFeature list shuffled by subWords count!");
-    }
-
-    // Generic shuffle helper
-    private void ShuffleList<T>(List<T> list)
-    {
-        for (int i = 0; i < list.Count; i++)
+        // Fisher–Yates shuffle but starting from index 20
+        System.Random rand = new System.Random();
+        for (int i = 20; i < listOfWordFeature.Count; i++)
         {
-            T temp = list[i];
-            int randomIndex = UnityEngine.Random.Range(i, list.Count);
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+            int randomIndex = rand.Next(i, listOfWordFeature.Count);
+            (listOfWordFeature[i], listOfWordFeature[randomIndex]) = (listOfWordFeature[randomIndex], listOfWordFeature[i]);
         }
+
+        Debug.Log("Shuffled list after 20 items (first 20 unchanged).");
     }
 }
 

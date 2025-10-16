@@ -20,7 +20,7 @@ public class ChangeScene : MonoBehaviour
     void ChangeSceneToScrable()
     {
         
-        SceneManager.LoadScene("TestWordsForSallu");
+        SceneManager.LoadScene("ReshuffleForSallu");
     }
     void PlaySound()
     {
