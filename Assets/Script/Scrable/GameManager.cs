@@ -79,15 +79,15 @@ public class GameManager : MonoBehaviour
         }
 
 
-        coinValue = 1500000;
+        coinValue = 20;
         CoinText.text = coinValue.ToString();
 
-        /*if (!CoinVal.Equals(""))
+        if (!CoinVal.Equals(""))
         {
             coinValue = int.Parse(CoinVal);
             CoinText.text = coinValue.ToString();
 
-        }*/
+        }
         print("current coin value" + coinValue);
         /*        coinValue = 100;
         */

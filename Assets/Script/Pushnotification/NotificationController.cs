@@ -1,4 +1,4 @@
-#if UNITY_ANDROID
+/*#if UNITY_ANDROID
 using Unity.Notifications.Android;
 #endif
 
@@ -12,7 +12,7 @@ using UnityEngine;
 public class NotificationController : MonoBehaviour
 {
 
-    [SerializeField] AndroidNotifications androidNotifications;
+    [SerializeField] AndroidIosNotificationController androidNotifications;
 #if Unity_IOS
     [SerializeField] IosNotifications iosNotifications;
 #endif
@@ -36,7 +36,7 @@ public class NotificationController : MonoBehaviour
 
 #if UNITY_ANDROID
             AndroidNotificationCenter.CancelAllNotifications();
-            androidNotifications.SendNotification("Lets learn", "Lets learn some new words today", 1);
+            androidNotifications.SendNotification("Lets learn", "Lets learn some new words today", 15);
 #endif
 
 #if Unity_IOS
@@ -49,3 +49,4 @@ public class NotificationController : MonoBehaviour
     // Update is called once per frame
 
 }
+*/
