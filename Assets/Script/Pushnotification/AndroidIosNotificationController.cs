@@ -44,7 +44,7 @@ public class AndroidIosNotificationController : MonoBehaviour
             Title = "Lets learn some new words.",
             Text = "Time to learn",
         };
-        var when = DateTime.Now.AddMinutes(fireTime);
+        var when = DateTime.Now.AddHours(fireTime);
         NotificationCenter.ScheduleNotification(n, new NotificationDateTimeSchedule(when));
     }
 
@@ -53,7 +53,7 @@ public class AndroidIosNotificationController : MonoBehaviour
         if (focus == false)
         {
 
-            SendNotification("Lets learn", "Lets learn some new words today", 3);
+            SendNotification("Lets learn", "Lets learn some new words today", 8);
 
         }
     }
