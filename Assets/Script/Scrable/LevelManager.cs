@@ -43,7 +43,7 @@ public class LevelManager : MonoBehaviour
             totalConnectedWordList.Add(connectedWords);
             print("total connectedWords count is " + totalConnectedWordList.Count);
             AndroidVibration.Instance.VibrateNow();
-            CameraShake.instance.ShakeCamera();
+            CameraShake.instance.ShakeUI();
             GameManagerObj.handanimation.gameObject.SetActive(false);
         }
         
